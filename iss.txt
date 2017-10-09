@@ -1,5 +1,5 @@
 # vertices
-VCM 2 0.4
+VCM 20.4
 VDM 4.3
 VK 19.64
 VK1 20.6
