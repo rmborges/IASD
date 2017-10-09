@@ -1,6 +1,7 @@
 class Vertex(object):
     id = ""
     weight = 0
+    connect = []
 
     def __init__(self, id, weight):
         self.id = id
@@ -8,6 +9,11 @@ class Vertex(object):
 
     def print_vertex(self):
         print('vertex', self.id, self.weight)
+        for vertex in self.connect[:]:
+            print(vertex.id)
+
+    def add_connect(self, connect):
+        self.connect.append(connect)
 
 class Edge(object):
     vertex1 = ""
@@ -61,7 +67,6 @@ while True:
         id = fields[0]
         weight = float(fields[1])
         vertex_list.append(Vertex(id, weight))
-        vertex_list[v].print_vertex()
         v = v + 1
 
     if line[0] == 'E':
@@ -81,3 +86,16 @@ while True:
         launch_list[l].print_launch()
         l = l + 1
 
+
+for edge in edge_list[:]:
+    vertex1=edge.vertex1
+    vertex2=edge.vertex2
+
+    for vertex in vertex_list[:]:
+        if vertex.id == vertex1:
+            vertex.add_connect(vertex)
+        if vertex.id == vertex2:
+            vertex.add_connect(vertex)
+
+for vertex in vertex_list[:]:
+    vertex.print_vertex()
