@@ -51,3 +51,15 @@ class Launch(object):
 
     def print_launch(self):
         print('launch', self.date, self.max_payload, self.fixed_cost, self.variable_cost)
+
+
+class Node(object):
+
+
+    def __init__(self, parent):
+        self.parent = parent
+        self.children = []
+        self.in_space = []
+        self.tot_cost = 0
+        self.vertex_to_add = []
+        self.level = 0

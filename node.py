@@ -2,11 +2,11 @@
 
 class Node(object):
 
-    parent = []
-    children = []
-    acc_cost = 0
 
     def __init__(self, parent):
         self.parent = parent
+        self.children = []
+        self.tot_cost = 0
+        self.level = 0
 
-    def calcCost(self):
+
