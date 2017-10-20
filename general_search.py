@@ -11,7 +11,6 @@ class GeneralSearch:
         self.gFunc = gFunc
         self.open_list = []
 
-
     def solver(self):
 
         # inserir root node na open list
