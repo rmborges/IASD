@@ -70,3 +70,4 @@ vertex_list[2].add_connect(vertex_list[0])
 
 for vertex in vertex_list[:]:
     vertex.print_vertex()
+
