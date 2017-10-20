@@ -1,14 +1,16 @@
-from node import *
+from uninformed from *
 
 # general search algorithm
 class GeneralSearch:
 
-    def __init__(self, root_node, goal, successorFunc, strategyFunc):
+    def __init__(self, root_node, strategyFunc, goalCheck, successorFunc, gFunc):
         self.root_node = root_node
-        self.goal = goal
-        self.open_list = []
-        self.successorFunc = succFunc
         self.strategyFunc = strategyFunc
+        self.goalCheck = goalCheck
+        self.successorFunc = successorFunc
+        self.gFunc = gFunc
+        self.open_list = []
+
 
     def solver(self):
 
@@ -29,7 +31,7 @@ class GeneralSearch:
             self.open_list.remove(node)
 
             # objetivo atingido (GOAL)?
-            if (node.testGoal(self.goal)):
+            if goalCheck(node) == True:
                 return node # retorna solução
 
             #
@@ -42,10 +44,3 @@ class GeneralSearch:
                     index = self.open_list.index(child)
                     if child.cost < self.open_list[index].cost:
                         self.open_list[index] = child
-
-
-
-def successorFunc():
-
-
-def strategyFunc():
