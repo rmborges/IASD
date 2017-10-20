@@ -10,7 +10,7 @@ class Vertex(object):
         self.weight = weight
 
     def print_vertex(self):
-        print('vertex', self.id, self.weight)
+        print('\nvertex', self.id, self.weight)
         for vertex in self.connect[:]:
             print(vertex.id)
 
@@ -18,15 +18,24 @@ class Vertex(object):
         self.connect.append(connect)
 
 class Edge(object):
-    vertex1 = ""
-    vertex2 = ""
+    #vertex1 = ""
+    #vertex2 = ""
 
     def __init__(self, vertex1, vertex2):
         self.vertex1 = vertex1
         self.vertex2 = vertex2
 
     def print_edge(self):
-        print('edge', self.vertex1, self.vertex2)
+        print('edge', self.vertex1.id, self.vertex1.weight, self.vertex2.id, self.vertex2.weight)
+
+    def add_weight(self,vertex_list):
+        for vertex in vertex_list[:]:
+            if(self.vertex1.id == vertex.id):
+                self.vertex1.weight = vertex.weight
+            if(self.vertex2.id == vertex.id):
+                self.vertex2.weight = vertex.weight
+
+
 
 class Launch(object):
     date= ""
