@@ -1,17 +1,14 @@
 from structs import *
 from read_data import *
+from general_search import *
 # funções dependentes do problema
 
 
-def successorFunc(in_space, launch_list):
+def successorFunc(in_space):
 
-    linked = []
-
-    for vertex in in_space[:]:
-        for connect in vertex.connect[:]:
-            if not connect in in_space:
-                linked.append(connect)
-    return linked
+    teste = 1
+    while teste == 1:
+        teste = 0
 
 
 def strategyFunc(open_list):
@@ -23,6 +20,6 @@ def goalCheck():
             return False
     return True
 
-def gFunc(vertex_no, launch):
+def gFunc(vertex_no, launch): #ver launch level
     cost = launch.fixed_cost + vertex_no*launch.variable_cost
     return cost
