@@ -26,7 +26,7 @@ def successorFunc(current_node,vertex_list,max_payload):
             if node.num_vertex == (n-1):
                 for vertex in vertex_list:
                     if not vertex.search_in_list(node.in_space):
-                        if vertex.connected_to_list(node.in_space):
+                        if ((vertex.connected_to_list(node.in_space)) or (current_node.level==0)):
                             new_node=Node()
                             new_node.copy_node(node)
                             new_node.num_vertex = n
@@ -54,7 +54,7 @@ def check_repeated(node, node_list):
     return 0
 
 def exceed_payload(node, parent_weight, max_payload):
-    node_weight = parent_weight - node.total_weight()
+    node_weight = node.total_weight() - parent_weight
     if node_weight > max_payload:
         return 1
     return 0

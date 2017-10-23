@@ -61,10 +61,10 @@ print('\n\n\n')
 
 
 Ze=Node()
-Ze.in_space.append(vertex_list[0])
-Ze.in_space.append(vertex_list[1])
+#Ze.in_space.append(vertex_list[0])
+#Ze.in_space.append(vertex_list[1])
 Ze.num_vertex=2
-Ze.level=1
+Ze.level=0
 
-successorFunc(Ze,vertex_list)
+successorFunc(Ze,vertex_list,20)
 
