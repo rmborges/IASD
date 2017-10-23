@@ -1,4 +1,5 @@
 from structs import *   #estruturas de dados
+from uninformed import *
 
 # leitura do ficheiro com os dados
 iss_data = open('iss.txt', 'r')
@@ -56,6 +57,14 @@ for edge in edge_list[:]:
 for vertex in vertex_list[:]:
     vertex.print_vertex()
 
-coiso=Vertex("batata",20.4)
+print('\n\n\n')
 
-print("o valor é",coiso.search_in_list(vertex_list))
+
+Ze=Node()
+Ze.in_space.append(vertex_list[0])
+Ze.in_space.append(vertex_list[1])
+Ze.num_vertex=2
+Ze.level=1
+
+successorFunc(Ze,vertex_list)
+

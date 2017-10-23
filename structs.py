@@ -17,9 +17,16 @@ class Vertex(object):
 
     def search_in_list(self, vertex_list):
         for vertex in vertex_list[:]:
-            if(vertex.id == self.id):
-                return 1;
-        return 0;
+            if vertex.id == self.id:
+                return 1
+        return 0
+
+    def connected_to_list(self, vertex_list):
+        for vt in vertex_list:
+            if self.search_in_list(vt.connect):
+                return 1
+        return 0
+
 
 
 
@@ -62,5 +69,18 @@ class Node(object):
         self.children = []
         self.in_space = []
         self.tot_cost = 0
-        self.vertex_to_add = []
+        self.num_vertex = 0
         self.level = 0
+
+    def print_node(self):
+        print('node:')
+        print('num vertex added:',self.num_vertex)
+        for vertex in self.in_space:
+            print('in_space', vertex.id)
+        print('\n')
+
+    def copy_node(self,old_node):
+        self.num_vertex=old_node.num_vertex
+        self.level=old_node.level
+        for vertex in old_node.in_space:
+            self.in_space.append(vertex)
