@@ -28,8 +28,6 @@ class Vertex(object):
         return 0
 
 
-
-
 class Edge(object):
 
     def __init__(self, vertex1, vertex2):
@@ -84,3 +82,9 @@ class Node(object):
         self.level=old_node.level
         for vertex in old_node.in_space:
             self.in_space.append(vertex)
+
+    def total_weight(self):
+        total_weight = 0
+        for vertex in self.in_space:
+            total_weight = total_weight + vertex.weight
+        return total_weight

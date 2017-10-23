@@ -5,8 +5,9 @@ from structs import *
 # funções dependentes do problema
 
 
-def successorFunc(current_node,vertex_list):
+def successorFunc(current_node,vertex_list,max_payload):
 
+    parent_weight = current_node.total_weight()
     node_list = []
     n = 0
     empty_node = Node()
@@ -31,8 +32,9 @@ def successorFunc(current_node,vertex_list):
                             new_node.num_vertex = n
                             new_node.in_space.append(vertex)
                             if not check_repeated(new_node,node_list):
-                                node_list.append(new_node)
-                                test = 1
+                                if not exceed_payload(new_node, parent_weight, max_payload):
+                                    node_list.append(new_node)
+                                    test = 1
 
 
     for node in node_list:
@@ -51,8 +53,11 @@ def check_repeated(node, node_list):
                 return 1
     return 0
 
-
-
+def exceed_payload(node, parent_weight, max_payload):
+    node_weight = parent_weight - node.total_weight()
+    if node_weight > max_payload:
+        return 1
+    return 0
 
 
 def strategyFunc(open_list):
