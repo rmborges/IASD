@@ -7,7 +7,7 @@ import copy
 def successorFunc(current_node, vertex_list, launch_list, gfunc):
     node_list = []
 
-    if current_node.level >= len(launch_list):
+    if current_node.level == (len(launch_list) - 1):
         return node_list
 
     launch = launch_list[current_node.level]
@@ -70,7 +70,7 @@ def strategyFunc(open_list):
 
 def goalCheck(node, vertex_list):
     for vertex in vertex_list:
-        if not vertex in node.in_space:
+        if not vertex.search_in_list(node.in_space):
             return False
     return True
 

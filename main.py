@@ -25,4 +25,4 @@ solution = solve.solver()
 #a = successorFunc(ze, vertex_list, launch_list, gFunc)
 #b = successorFunc(luis, vertex_list, launch_list, gFunc)
 
-#print(1)
+print(111111)

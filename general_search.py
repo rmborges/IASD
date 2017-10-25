@@ -11,33 +11,30 @@ class GeneralSearch:
         self.goalCheck = goalCheck
         self.successorFunc = successorFunc
         self.gFunc = gFunc
-        self.open_list = []
         self.vertex_list = vertex_list
         self.launch_list = launch_list
 
+
+
     def solver(self):
+        frontier = [self.root_node]  # priority queue
+        explored = []  # priority queu
         child_nodes = []
 
-        # inserir root node na open list
-        self.open_list.append(self.root_node)
-
         while True:
+            print(len(frontier))
 
-            # open list vazia?
-            if not self.open_list:
-                print('Failure: open list vazia.')
+            if not frontier:
+                print('Failure: frontier list vazia.')
                 return False
 
-            # escolher node de acordo com strategy function
-            curr_node = self.strategyFunc(self.open_list)
-            node = copy.deepcopy(curr_node)
-
-            # remoção da open list
-            self.open_list.remove(curr_node)
+            node = frontier.pop()
 
             # objetivo atingido (GOAL)?
             if self.goalCheck(node, self.vertex_list):
                 return node # retorna solução
+
+            explored.append(node)
 
             # successor function
             children = successorFunc(node, self.vertex_list, self.launch_list, self.gFunc)
@@ -45,10 +42,11 @@ class GeneralSearch:
 
             for child in child_nodes:
                 #child.print_node()
-                if child not in self.open_list:
-                    self.open_list.append(child)
+                if child not in (frontier or explored):
+                    frontier.append(child)
                     print(1)
-                #elif child in self.open_list:
-                #    index = self.open_list.index(child)
-                #    if child.tot_cost < self.open_list[index].tot_cost:
-                #        self.open_list[index] = child
+                elif child in frontier:
+                    index = frontier.index(child)
+                    if child.tot_cost < frontier[index].tot_cost:
+                        frontier[index] = child
+                        print(2)
