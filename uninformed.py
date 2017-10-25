@@ -1,4 +1,5 @@
 from structs import *
+import copy
 
 # funções dependentes do problema
 
@@ -6,7 +7,7 @@ from structs import *
 def successorFunc(current_node, vertex_list, launch_list, gfunc):
     node_list = []
 
-    if current_node.level > len(launch_list):
+    if current_node.level >= len(launch_list):
         return node_list
 
     launch = launch_list[current_node.level]
@@ -29,24 +30,20 @@ def successorFunc(current_node, vertex_list, launch_list, gfunc):
             if node.num_vertex == (n-1):
                 for vertex in vertex_list:
                     if not vertex.search_in_list(node.in_space):
-                        if ((vertex.connected_to_list(node.in_space)) or (current_node.level==0)):
-                            new_node=Node()
+                        #if ((vertex.connected_to_list(node.in_space)) or (current_node.level==0)):
+                        if ((vertex.connected_to_list(node.in_space)) or (not current_node.in_space)):
+                            new_node = Node()
                             new_node.copy_node(node)
                             new_node.num_vertex = n
                             new_node.parent = current_node
                             new_node.in_space.append(vertex)
                             new_node.level = current_node.level + 1
-                            node_weight = node.total_weight() - parent_weight
+                            node_weight = new_node.total_weight() - parent_weight
                             new_node.tot_cost = gfunc(node_weight, launch)
                             if not check_repeated(new_node, node_list):
                                 if not exceed_payload(node_weight, launch.max_payload):
                                     node_list.append(new_node)
                                     test = 1
-
-
-    for node in node_list:
-        current_node.children.append(node)
-        #node.print_node()
 
     return node_list
 

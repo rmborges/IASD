@@ -65,7 +65,6 @@ class Node(object):
 
     def __init__(self):
         self.parent = []
-        self.children = []
         self.in_space = []
         self.tot_cost = 0
         self.num_vertex = 0
