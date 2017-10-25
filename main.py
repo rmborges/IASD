@@ -1,11 +1,18 @@
-from uninformed import *
 from general_search import *
+from uninformed import *
+from read_data import *
+from structs import *
 
-root_node = Node()
 
-root_node.parent = []
-root_node.in_space = []
-root_node.children = vertex_list
-root_node.level = 0
+lists = read_data()
 
-solve = GeneralSearch(root_node, strategyFunc, goalCheck, successorFunc, gFunc)
+[vertex_list, launch_list] = lists
+
+root_node = Node() # empty node (nothing in space)
+print(1)
+solve = GeneralSearch(root_node, strategyFunc, goalCheck, successorFunc, gFunc, vertex_list, launch_list)
+print(2)
+solution = solve.solver()
+print(3)
+if solution == False:
+    print('No solution!')

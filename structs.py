@@ -48,14 +48,15 @@ class Edge(object):
 
 class Launch(object):
 
-    def __init__(self, date, max_payload, fixed_cost, variable_cost):
+    def __init__(self, date, max_payload, fixed_cost, variable_cost, level):
         self.date = date
         self.max_payload = max_payload
         self.fixed_cost = fixed_cost
         self.variable_cost = variable_cost
+        self.level = level
 
     def print_launch(self):
-        print('launch', self.date, self.max_payload, self.fixed_cost, self.variable_cost)
+        print('launch', self.date, self.max_payload, self.fixed_cost, self.variable_cost, self.level)
 
 
 class Node(object):
