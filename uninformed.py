@@ -77,3 +77,26 @@ def goalCheck(node, vertex_list):
 def gFunc(node_weight, launch): #ver launch level
     cost = launch.fixed_cost + node_weight*launch.variable_cost
     return cost
+
+def printSolution(node, launch_list):
+    sum_costs = 0
+    cleanPreviousVertex(node)
+    while node.parent:
+        level = node.level
+        id_list = []
+        for vertex in node.in_space:
+            if not vertex.search_in_list(node.parent.in_space):
+                id_list.append(vertex.id)
+        print(launch_list[level].date, id_list, node.tot_cost)
+        sum_costs = sum_costs + node.tot_cost
+        node = node.parent
+    print(sum_costs)
+
+def cleanPreviousVertex(node):
+    father = node.parent
+    while father:
+        for vertex in node.in_space:
+            if vertex.search_in_list(father.in_space):
+                node.in_space.remove(vertex)
+        father = father.parent
+        node = node.parent

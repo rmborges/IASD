@@ -14,15 +14,9 @@ solve = GeneralSearch(root_node, strategyFunc, goalCheck, successorFunc, gFunc, 
 
 solution = solve.solver()
 
-#if solution == False:
-#    print('No solution!')
+if solution:
+    printSolution(solution, launch_list)
+else:
+    print('\n::: No solution!\n')
 
-#ze = Node()
-#luis = Node()
-#luis.parent = ze
-#luis.level = 1
 
-#a = successorFunc(ze, vertex_list, launch_list, gFunc)
-#b = successorFunc(luis, vertex_list, launch_list, gFunc)
-
-print(111111)

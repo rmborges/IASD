@@ -22,13 +22,16 @@ class GeneralSearch:
         child_nodes = []
 
         while True:
-            print(len(frontier))
 
             if not frontier:
                 print('Failure: frontier list vazia.')
                 return False
 
+            # Retrieve the node with the lowest cost
+            #node = min(frontier, key=lambda node: node.tot_cost)
+
             node = frontier.pop()
+            #frontier.remove(node)
 
             # objetivo atingido (GOAL)?
             if self.goalCheck(node, self.vertex_list):
@@ -44,9 +47,7 @@ class GeneralSearch:
                 #child.print_node()
                 if child not in (frontier or explored):
                     frontier.append(child)
-                    print(1)
                 elif child in frontier:
                     index = frontier.index(child)
                     if child.tot_cost < frontier[index].tot_cost:
                         frontier[index] = child
-                        print(2)
