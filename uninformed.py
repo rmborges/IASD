@@ -7,7 +7,7 @@ import copy
 def successorFunc(current_node, vertex_list, launch_list, gfunc):
     node_list = []
 
-    if current_node.level == (len(launch_list) - 1):
+    if current_node.level == len(launch_list):
         return node_list
 
     launch = launch_list[current_node.level]
@@ -81,13 +81,12 @@ def gFunc(node_weight, launch): #ver launch level
 def printSolution(node, launch_list):
     sum_costs = 0
     cleanPreviousVertex(node)
-    while node.parent:
+    while node and node.level >= 0:
         level = node.level
         id_list = []
         for vertex in node.in_space:
-            if not vertex.search_in_list(node.parent.in_space):
-                id_list.append(vertex.id)
-        print(launch_list[level].date, id_list, node.tot_cost)
+            id_list.append(vertex.id)
+        print(launch_list[level-1].date, id_list, node.tot_cost)
         sum_costs = sum_costs + node.tot_cost
         node = node.parent
     print(sum_costs)
@@ -95,8 +94,16 @@ def printSolution(node, launch_list):
 def cleanPreviousVertex(node):
     father = node.parent
     while father:
-        for vertex in node.in_space:
-            if vertex.search_in_list(father.in_space):
-                node.in_space.remove(vertex)
+        l = len(node.in_space)
+        i = 0
+        index = 0
+        while i < l:
+            if node.in_space[index].search_in_list(father.in_space):
+                del node.in_space[index]
+            else:
+                index = index + 1
+            i = i + 1
+
+
+        node = father
         father = father.parent
-        node = node.parent

@@ -28,10 +28,10 @@ class GeneralSearch:
                 return False
 
             # Retrieve the node with the lowest cost
-            #node = min(frontier, key=lambda node: node.tot_cost)
+            node = min(frontier, key=lambda node: node.tot_cost)
 
-            node = frontier.pop()
-            #frontier.remove(node)
+            #node = frontier.pop()
+            frontier.remove(node)
 
             # objetivo atingido (GOAL)?
             if self.goalCheck(node, self.vertex_list):
@@ -40,8 +40,9 @@ class GeneralSearch:
             explored.append(node)
 
             # successor function
-            children = successorFunc(node, self.vertex_list, self.launch_list, self.gFunc)
-            child_nodes = copy.deepcopy(children)
+            child_nodes = successorFunc(node, self.vertex_list, self.launch_list, self.gFunc)
+            #children = successorFunc(node, self.vertex_list, self.launch_list, self.gFunc)
+            #child_nodes = copy.deepcopy(children)
 
             for child in child_nodes:
                 #child.print_node()
