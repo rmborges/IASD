@@ -87,7 +87,8 @@ def printSolution(node, launch_list):
         id_list = []
         for vertex in node.in_space:
             id_list.append(vertex.id)
-        print(launch_list[level-1].date, id_list, node.tot_cost)
+        if id_list:
+            print(launch_list[level-1].date, id_list, node.tot_cost)
         sum_costs = sum_costs + node.tot_cost
         node = node.parent
     print(sum_costs)
