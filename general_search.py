@@ -29,7 +29,6 @@ class GeneralSearch:
 
             # Retrieve the node with the lowest cost
             node = min(frontier, key=lambda node: node.tot_cost)
-
             #node = frontier.pop()
             frontier.remove(node)
 
@@ -37,7 +36,7 @@ class GeneralSearch:
             if self.goalCheck(node, self.vertex_list):
                 return node # retorna solução
 
-            explored.append(node)
+            #explored.append(node)
 
             # successor function
             child_nodes = successorFunc(node, self.vertex_list, self.launch_list, self.gFunc)
@@ -48,7 +47,7 @@ class GeneralSearch:
                 #child.print_node()
                 if child not in (frontier or explored):
                     frontier.append(child)
-                elif child in frontier:
-                    index = frontier.index(child)
-                    if child.tot_cost < frontier[index].tot_cost:
-                        frontier[index] = child
+                #elif child in frontier:
+                #    index = frontier.index(child)
+                #    if child.tot_cost < frontier[index].tot_cost:
+                #        frontier[index] = child

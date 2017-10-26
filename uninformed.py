@@ -39,7 +39,8 @@ def successorFunc(current_node, vertex_list, launch_list, gfunc):
                             new_node.in_space.append(vertex)
                             new_node.level = current_node.level + 1
                             node_weight = new_node.total_weight() - parent_weight
-                            new_node.tot_cost = gfunc(node_weight, launch)
+                            #new_node.tot_cost = gfunc(node_weight, launch)
+                            new_node.tot_cost = new_node.parent.tot_cost + gfunc(node_weight, launch)
                             if not check_repeated(new_node, node_list):
                                 if not exceed_payload(node_weight, launch.max_payload):
                                     node_list.append(new_node)
@@ -81,7 +82,7 @@ def gFunc(node_weight, launch): #ver launch level
 def printSolution(node, launch_list):
     sum_costs = 0
     cleanPreviousVertex(node)
-    while node and node.level >= 0:
+    while node and node.level > 0:
         level = node.level
         id_list = []
         for vertex in node.in_space:
