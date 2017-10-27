@@ -31,7 +31,7 @@ def successorFunc(current_node, vertex_list, launch_list, gfunc):
                 for vertex in vertex_list:
                     if not vertex.search_in_list(node.in_space):
                         #if ((vertex.connected_to_list(node.in_space)) or (current_node.level==0)):
-                        if ((vertex.connected_to_list(node.in_space)) or (not current_node.in_space)):
+                        if ((vertex.connected_to_list(node.in_space)) or (not node.in_space)):
                             new_node = Node()
                             new_node.copy_node(node)
                             new_node.num_vertex = n
