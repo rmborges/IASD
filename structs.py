@@ -75,6 +75,7 @@ class Node(object):
         print('num vertex added:',self.num_vertex)
         for vertex in self.in_space:
             print('in_space', vertex.id)
+        print('total cost up to node:',self.tot_cost)
         print('\n')
 
     def copy_node(self,old_node):
@@ -82,6 +83,7 @@ class Node(object):
         self.level=old_node.level
         for vertex in old_node.in_space:
             self.in_space.append(vertex)
+        self.tot_cost=old_node.tot_cost
 
     def total_weight(self):
         total_weight = 0

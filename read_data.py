@@ -61,4 +61,4 @@ def read_data():
     return lists
 
     # order launch list by date
-    launch_list.sort(key = lambda launch: launch.date[::-1])
+    #launch_list.sort(key = lambda launch: launch.date[::-1])

@@ -19,6 +19,7 @@ def successorFunc(current_node, vertex_list, launch_list, gfunc):
     empty_node.level = current_node.level + 1
     empty_node.in_space=current_node.in_space
     empty_node.num_vertex = 0
+    empty_node.tot_cost=current_node.tot_cost
     node_list.append(empty_node)
     test = 1
 
@@ -38,9 +39,10 @@ def successorFunc(current_node, vertex_list, launch_list, gfunc):
                             new_node.parent = current_node
                             new_node.in_space.append(vertex)
                             new_node.level = current_node.level + 1
-                            node_weight = new_node.total_weight() - parent_weight
+                            #node_weight = new_node.total_weight() - parent_weight
                             #new_node.tot_cost = gfunc(node_weight, launch)
-                            new_node.tot_cost = new_node.parent.tot_cost + gfunc(node_weight, launch)
+                            new_node.tot_cost = new_node.tot_cost + gFunc(n, vertex, launch)
+                            node_weight = new_node.total_weight()-parent_weight
                             if not check_repeated(new_node, node_list):
                                 if not exceed_payload(node_weight, launch.max_payload):
                                     node_list.append(new_node)
@@ -75,12 +77,16 @@ def goalCheck(node, vertex_list):
             return False
     return True
 
-def gFunc(node_weight, launch): #ver launch level
-    cost = launch.fixed_cost + node_weight*launch.variable_cost
+def gFunc(n, vertex, launch): #ver launch level
+    cost = 0
+    if n == 1:
+        cost = launch.fixed_cost
+    cost = cost + vertex.weight*launch.variable_cost
     return cost
 
 def printSolution(node, launch_list):
-    sum_costs = 0
+    #sum_costs = 0
+    mission_cost=node.tot_cost
     cleanPreviousVertex(node)
     while node and node.level > 0:
         level = node.level
@@ -89,9 +95,9 @@ def printSolution(node, launch_list):
             id_list.append(vertex.id)
         if id_list:
             print(launch_list[level-1].date, id_list, node.tot_cost)
-        sum_costs = sum_costs + node.tot_cost
+        #sum_costs = sum_costs + node.tot_cost
         node = node.parent
-    print(sum_costs)
+    print(mission_cost)
 
 def cleanPreviousVertex(node):
     father = node.parent
