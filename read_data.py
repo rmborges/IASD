@@ -59,3 +59,6 @@ def read_data():
 
     lists = [vertex_list, launch_list]
     return lists
+
+    # order launch list by date
+    launch_list.sort(key = lambda launch: launch.date[::-1])

@@ -17,8 +17,8 @@ class GeneralSearch:
 
 
     def solver(self):
-        frontier = [self.root_node]  # priority queue
-        explored = []  # priority queu
+        frontier = [self.root_node]
+        explored = []
         child_nodes = []
 
         while True:
@@ -29,25 +29,22 @@ class GeneralSearch:
 
             # Retrieve the node with the lowest cost
             node = min(frontier, key=lambda node: node.tot_cost)
-            #node = frontier.pop()
             frontier.remove(node)
 
             # objetivo atingido (GOAL)?
             if self.goalCheck(node, self.vertex_list):
                 return node # retorna solução
 
-            #explored.append(node)
+            explored.append(node)
 
             # successor function
             child_nodes = successorFunc(node, self.vertex_list, self.launch_list, self.gFunc)
-            #children = successorFunc(node, self.vertex_list, self.launch_list, self.gFunc)
-            #child_nodes = copy.deepcopy(children)
 
             for child in child_nodes:
-                #child.print_node()
                 if child not in (frontier or explored):
                     frontier.append(child)
-                #elif child in frontier:
-                #    index = frontier.index(child)
-                #    if child.tot_cost < frontier[index].tot_cost:
-                #        frontier[index] = child
+                elif child in frontier:
+                    print(AAAAAAAAAA)
+                    index = frontier.index(child)
+                    if child.tot_cost < frontier[index].tot_cost:
+                        frontier[index] = child
