@@ -104,31 +104,15 @@ def gFunc(n, vertex, launch): #ver launch level
 def printSolution(node, launch_list):
     #sum_costs = 0
     mission_cost=node.tot_cost
-    cleanPreviousVertex(node)
-    while node and node.level > 0:
-        level = node.level
+    #cleanPreviousVertex(node)
+    level=node.level
+
+    while level>0:
         id_list = []
-        for vertex in node.in_space:
+        for vertex in node.added:
             id_list.append(vertex.id)
         if id_list:
             print(launch_list[level-1].date, id_list, node.tot_cost)
-        #sum_costs = sum_costs + node.tot_cost
-        node = node.parent
+        level=level-1
+        node=node.parent
     print(mission_cost)
-
-def cleanPreviousVertex(node):
-    father = node.parent
-    while father:
-        l = len(node.in_space)
-        i = 0
-        index = 0
-        while i < l:
-            if node.in_space[index].search_in_list(father.in_space):
-                del node.in_space[index]
-            else:
-                index = index + 1
-            i = i + 1
-
-
-        node = father
-        father = father.parent
