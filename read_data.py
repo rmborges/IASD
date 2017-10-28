@@ -12,6 +12,7 @@ def read_data():
     edge_list = []
 
     l = 0
+    aux_list = []
     launch_list = []
 
     launch_level = 0
@@ -44,13 +45,14 @@ def read_data():
             fixed_cost = float(fields[3])
             variable_cost = float(fields[4])
 
-            date_ord = '1234'
+            date_ord=date[4]+date[5]+date[6]+date[7]+date[2]+date[3]+date[0]+date[1]
 
-            launch_list.append(Launch(date, date_ord, max_payload, fixed_cost, variable_cost, launch_level))
+            aux_list.append(Launch(date, date_ord, max_payload, fixed_cost, variable_cost, launch_level))
             #launch_list[l].print_launch()
             launch_level = launch_level + 1
             l = l + 1
 
+    launch_list=sorted(aux_list, key=lambda launch: launch.date_ord)
 
     for edge in edge_list[:]:
         for vertex in vertex_list[:]:
