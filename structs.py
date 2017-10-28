@@ -66,6 +66,7 @@ class Node(object):
     def __init__(self):
         self.parent = []
         self.in_space = []
+        self.added=[]
         self.tot_cost = 0
         self.num_vertex = 0
         self.level = 0
@@ -83,6 +84,8 @@ class Node(object):
         self.level=old_node.level
         for vertex in old_node.in_space:
             self.in_space.append(vertex)
+        for vertex in old_node.added:
+            self.added.append(vertex)
         self.tot_cost=old_node.tot_cost
 
     def total_weight(self):

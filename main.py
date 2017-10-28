@@ -19,9 +19,21 @@ solution = solve.solver()
 total_time = time() - initial_time
 
 if solution:
-    printSolution(solution, launch_list)
-else:
-    print('\n::: No solution!\n')
+    level=solution.level
+    node=solution
+    while level>0:
+        print(launch_list[level-1].date)
+        for vertex in node.added:
+            print(vertex.id)
+        level=level-1
+        node=node.parent
+
+
+
+
+    #printSolution(solution, launch_list)
+#else:
+#    print('\n::: No solution!\n')
 
 print('\nElapsed time: ', total_time, 's')
 

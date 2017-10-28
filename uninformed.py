@@ -38,6 +38,7 @@ def successorFunc(current_node, vertex_list, launch_list, gfunc):
                             new_node.num_vertex = n
                             new_node.parent = current_node
                             new_node.in_space.append(vertex)
+                            new_node.added.append(vertex)
                             new_node.level = current_node.level + 1
                             #node_weight = new_node.total_weight() - parent_weight
                             #new_node.tot_cost = gfunc(node_weight, launch)
