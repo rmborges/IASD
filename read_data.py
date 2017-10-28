@@ -44,7 +44,7 @@ def read_data():
             fixed_cost = float(fields[3])
             variable_cost = float(fields[4])
 
-            launch_list.append(Launch(date, max_payload, fixed_cost, variable_cost, launch_level))
+            launch_list.append(Launch(date, date_ord, max_payload, fixed_cost, variable_cost, launch_level))
             #launch_list[l].print_launch()
             launch_level = launch_level + 1
             l = l + 1
