@@ -29,6 +29,7 @@ class GeneralSearch:
 
             # Retrieve the node with the lowest cost
             node = min(frontier, key=lambda node: node.tot_cost)
+
             frontier.remove(node)
 
             # objetivo atingido (GOAL)?
