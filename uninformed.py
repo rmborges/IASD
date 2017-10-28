@@ -10,6 +10,22 @@ def successorFunc(current_node, vertex_list, launch_list, gfunc):
     if current_node.level == len(launch_list):
         return node_list
 
+    # soma do peso que falta enviar
+    remaining_weight = 0
+    for vertex in vertex_list:
+        if vertex not in current_node.in_space:
+            remaining_weight = remaining_weight + vertex.weight
+
+    # peso que é possível enviar nos launches restantes
+    available_weight = 0
+    for launch in launch_list:
+        if launch_list.index(launch) >= current_node.level:
+            available_weight = available_weight + launch.max_payload
+
+    # não expandir se já não é possível o que resta nos launches que faltam
+    if remaining_weight > available_weight:
+        return node_list
+
     launch = launch_list[current_node.level]
 
     parent_weight = current_node.total_weight()
