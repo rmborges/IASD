@@ -1,9 +1,9 @@
 from structs import *   #estruturas de dados
 
-def read_data():
+def read_data(file):
 
     # leitura do ficheiro com os dados
-    iss_data = open('iss.txt', 'r')
+    iss_data = open(file, 'r')
 
     v = 0
     vertex_list = []
