@@ -127,7 +127,10 @@ def printSolution(node, launch_list):
         for vertex in node.added:
             id_list.append(vertex.id)
         if id_list:
-            print(launch_list[level-1].date, id_list, node.tot_cost-node.parent.tot_cost)
+            vertex_string = ''
+            for id in id_list:
+                vertex_string = vertex_string + ' ' + id
+            print(launch_list[level-1].date, vertex_string, node.tot_cost-node.parent.tot_cost)
         level=level-1
         node=node.parent
     print(mission_cost)
