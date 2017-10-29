@@ -18,9 +18,14 @@ def successorFunc(current_node, vertex_list, launch_list, gfunc):
 
     # peso que é possível enviar nos launches restantes
     available_weight = 0
+    min_cost_possible = float('Inf')
     for launch in launch_list:
         if launch_list.index(launch) >= current_node.level:
             available_weight = available_weight + launch.max_payload
+            # determines the cost of a full weight launch
+            max_cost = launch.fixed_cost + launch.variable_cost*launch.max_payload
+            if max_cost < min_cost_possible:
+                min_cost_possible = max_cost
 
     # não expandir se já não é possível o que resta nos launches que faltam
     if remaining_weight > available_weight:
