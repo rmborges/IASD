@@ -21,6 +21,8 @@ class GeneralSearch:
         explored = []
         child_nodes = []
 
+        #i=0
+
         while True:
 
             if not frontier:
@@ -29,6 +31,9 @@ class GeneralSearch:
 
             # Retrieve the node with the lowest cost
             node = min(frontier, key=lambda node: node.tot_cost)
+
+            #print(i)
+            #i=i+1
 
             frontier.remove(node)
 

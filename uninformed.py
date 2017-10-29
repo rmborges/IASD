@@ -65,12 +65,20 @@ def successorFunc(current_node, vertex_list, launch_list, gfunc):
                                     node_list.append(new_node)
                                     test = 1
 
-    # A DESENVOLVER
-    # soma do peso que falta enviar nos child nodes
-    #remaining_weight = 0
-    #for vertex in vertex_list:
-    #    if vertex not in current_node.in_space:
-    #        remaining_weight = remaining_weight + vertex.weight
+    # elimina casos em que o peso restante excede o dos lançamentos que faltam
+    if node_list:
+        # peso que é possível enviar nos launches restantes (nos child nodes)
+        index = node_list[0].level - 1
+        available_weight = available_weight - launch_list[index].max_payload
+
+        # soma do peso que falta enviar nos child nodes
+        for node in node_list:
+            remaining_weight = 0
+            for vertex in vertex_list:
+                if vertex not in node.in_space:
+                    remaining_weight = remaining_weight + vertex.weight
+            if remaining_weight > available_weight:
+                node_list.remove(node)
 
     return node_list
 
