@@ -70,6 +70,7 @@ class Node(object):
         self.tot_cost = 0
         self.num_vertex = 0
         self.level = 0
+        self.heuristic = 0
 
     def print_node(self):
         print('node:')

@@ -5,7 +5,7 @@ import copy
 
 class GeneralSearch:
 
-    def __init__(self, root_node, strategyFunc, goalCheck, successorFunc, gFunc, vertex_list, launch_list, heuristic):
+    def __init__(self, root_node, strategyFunc, goalCheck, successorFunc, gFunc, vertex_list, launch_list, informed):
         self.root_node = root_node
         self.strategyFunc = strategyFunc
         self.goalCheck = goalCheck
@@ -13,7 +13,7 @@ class GeneralSearch:
         self.gFunc = gFunc
         self.vertex_list = vertex_list
         self.launch_list = launch_list
-        self.heuristic = heuristic
+        self.informed = informed
 
 
 
@@ -22,7 +22,7 @@ class GeneralSearch:
         explored = []
         child_nodes = []
 
-        #i=0
+        i=0
 
         while True:
 
@@ -31,10 +31,10 @@ class GeneralSearch:
                 return False
 
             # Retrieve the node with the lowest cost
-            node = min(frontier, key=lambda node: node.tot_cost)
+            node = min(frontier, key=lambda node: (node.tot_cost+node.heuristic))
 
-            #print(i)
-            #i=i+1
+            print(i)
+            i=i+1
 
             frontier.remove(node)
 
@@ -45,7 +45,7 @@ class GeneralSearch:
             explored.append(node)
 
             # successor function
-            child_nodes = successorFunc(node, self.vertex_list, self.launch_list, self.gFunc, self.heuristic)
+            child_nodes = successorFunc(node, self.vertex_list, self.launch_list, self.gFunc, self.informed)
 
             for child in child_nodes:
                 if child not in (frontier or explored):

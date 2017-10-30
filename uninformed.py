@@ -4,7 +4,7 @@ import copy
 # funções dependentes do problema
 
 
-def successorFunc(current_node, vertex_list, launch_list, gFunc, heuristic):
+def successorFunc(current_node, vertex_list, launch_list, gFunc, informed):
     node_list = []
 
     if current_node.level == len(launch_list):
@@ -17,10 +17,14 @@ def successorFunc(current_node, vertex_list, launch_list, gFunc, heuristic):
             remaining_weight = remaining_weight + vertex.weight
 
     # peso que é possível enviar nos launches restantes
+    # cálculo do var_cost min nos launches que faltam
     available_weight = 0
+    min_vcost = float('Inf')
     for launch in launch_list:
         if launch_list.index(launch) >= current_node.level:
             available_weight = available_weight + launch.max_payload
+            if launch.variable_cost < min_vcost:
+                min_vcost = launch.variable_cost
 
     # não expandir se já não é possível o que resta nos launches que faltam
     if remaining_weight > available_weight:
@@ -77,6 +81,13 @@ def successorFunc(current_node, vertex_list, launch_list, gFunc, heuristic):
             for vertex in vertex_list:
                 if vertex not in node.in_space:
                     remaining_weight = remaining_weight + vertex.weight
+
+            # heuristic value
+            if informed:
+                node.heuristic = min_vcost * remaining_weight
+            if not informed:
+                node.heuristic = 0
+
             if remaining_weight > available_weight:
                 node_list.remove(node)
 
