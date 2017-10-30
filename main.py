@@ -11,7 +11,10 @@ file = 'iss.txt'
 # parse command line arguments
 
 # uninformed or informed method
-#un_in = sys.argv[1][1]
+#if sys.argv[1][1] == '-i':
+    #informed = 1
+#if sys.argv[1][1] == '-u':
+    #informed = 0
 
 # file with data
 #file = sys.argv[2]
@@ -24,7 +27,8 @@ lists = read_data(file)
 # root node - empty node (nothing in space)
 root_node = Node()
 
-informed = 1  # uninformed
+# in/uninformed
+informed = 1
 
 solve = GeneralSearch(root_node, strategyFunc, goalCheck, successorFunc, gFunc, vertex_list, launch_list, informed)
 
