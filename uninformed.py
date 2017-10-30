@@ -4,7 +4,7 @@ import copy
 # funções dependentes do problema
 
 
-def successorFunc(current_node, vertex_list, launch_list, gfunc):
+def successorFunc(current_node, vertex_list, launch_list, gFunc, heuristic):
     node_list = []
 
     if current_node.level == len(launch_list):

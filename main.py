@@ -24,7 +24,9 @@ lists = read_data(file)
 # root node - empty node (nothing in space)
 root_node = Node()
 
-solve = GeneralSearch(root_node, strategyFunc, goalCheck, successorFunc, gFunc, vertex_list, launch_list)
+heuristic = 0  # uninformed
+
+solve = GeneralSearch(root_node, strategyFunc, goalCheck, successorFunc, gFunc, vertex_list, launch_list, heuristic)
 
 initial_time = time()
 

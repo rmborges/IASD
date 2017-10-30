@@ -5,7 +5,7 @@ import copy
 
 class GeneralSearch:
 
-    def __init__(self, root_node, strategyFunc, goalCheck, successorFunc, gFunc, vertex_list, launch_list):
+    def __init__(self, root_node, strategyFunc, goalCheck, successorFunc, gFunc, vertex_list, launch_list, heuristic):
         self.root_node = root_node
         self.strategyFunc = strategyFunc
         self.goalCheck = goalCheck
@@ -13,6 +13,7 @@ class GeneralSearch:
         self.gFunc = gFunc
         self.vertex_list = vertex_list
         self.launch_list = launch_list
+        self.heuristic = heuristic
 
 
 
@@ -44,7 +45,7 @@ class GeneralSearch:
             explored.append(node)
 
             # successor function
-            child_nodes = successorFunc(node, self.vertex_list, self.launch_list, self.gFunc)
+            child_nodes = successorFunc(node, self.vertex_list, self.launch_list, self.gFunc, self.heuristic)
 
             for child in child_nodes:
                 if child not in (frontier or explored):
