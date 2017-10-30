@@ -33,13 +33,13 @@ class GeneralSearch:
             # Retrieve the node with the lowest cost
             node = min(frontier, key=lambda node: (node.tot_cost+node.heuristic))
 
-            print(i)
             i=i+1
 
             frontier.remove(node)
 
             # objetivo atingido (GOAL)?
             if self.goalCheck(node, self.vertex_list):
+                print(i)
                 return node # retorna solução
 
             explored.append(node)
