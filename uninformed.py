@@ -46,7 +46,7 @@ def successorFunc(current_node, vertex_list, launch_list, gFunc, informed):
 
 
 
-    while len(launch_list)>level:
+    while level < len(launch_list):
         launch = launch_list[level]
         level=level+1
         node_list[0].level=level
@@ -77,30 +77,30 @@ def successorFunc(current_node, vertex_list, launch_list, gFunc, informed):
                                         node_list.append(new_node)
                                         test = 1
 
-        # elimina casos em que o peso restante excede o dos lançamentos que faltam
-        if node_list:
-            # peso que é possível enviar nos launches restantes (nos child nodes)
-            index = node_list[0].level - 1
-            available_weight = available_weight - launch_list[index].max_payload
-
-            # soma do peso que falta enviar nos child nodes
-            for node in node_list:
-                if node.level == level:
-                    remaining_weight = 0
-                    for vertex in vertex_list:
-                        if vertex not in node.in_space:
-                            remaining_weight = remaining_weight + vertex.weight
-
-                    # heuristic value
-                    if informed:
-                        node.heuristic = min_vcost * remaining_weight
-                    if not informed:
-                        node.heuristic = 0
-
-                    if remaining_weight > available_weight:
-                        node_list.remove(node)
-
     node_list.remove(node_list[0])
+
+    # elimina casos em que o peso restante excede o dos lançamentos que faltam
+    if node_list:
+        # peso que é possível enviar nos launches restantes (nos child nodes)
+        index = node_list[0].level - 1
+        available_weight = available_weight - launch_list[index].max_payload
+
+        # soma do peso que falta enviar nos child nodes
+        for node in node_list:
+            if node.level == level:
+                remaining_weight = 0
+                for vertex in vertex_list:
+                    if vertex not in node.in_space:
+                        remaining_weight = remaining_weight + vertex.weight
+
+                # heuristic value
+                if informed:
+                    node.heuristic = min_vcost * remaining_weight
+                if not informed:
+                    node.heuristic = 0
+
+                if remaining_weight > available_weight:
+                    node_list.remove(node)
 
     return node_list
 
