@@ -30,10 +30,12 @@ def successorFunc(current_node, vertex_list, launch_list, gFunc, informed):
     if remaining_weight > available_weight:
         return node_list
 
-    launch = launch_list[current_node.level]
+
+
+    level = current_node.level
 
     parent_weight = current_node.total_weight()
-    n = 0
+
     empty_node = Node()
     empty_node.parent = current_node
     empty_node.level = current_node.level + 1
@@ -41,62 +43,71 @@ def successorFunc(current_node, vertex_list, launch_list, gFunc, informed):
     empty_node.num_vertex = 0
     empty_node.tot_cost=current_node.tot_cost
     node_list.append(empty_node)
-    test = 1
 
 
-    while test:
-        test = 0
-        n = n + 1
-        for node in node_list:
-            if node.num_vertex == (n-1):
-                for vertex in vertex_list:
-                    if not vertex.search_in_list(node.in_space):
-                        #if ((vertex.connected_to_list(node.in_space)) or (current_node.level==0)):
-                        if ((vertex.connected_to_list(node.in_space)) or (not node.in_space)):
-                            new_node = Node()
-                            new_node.copy_node(node)
-                            new_node.num_vertex = n
-                            new_node.parent = current_node
-                            new_node.in_space.append(vertex)
-                            new_node.added.append(vertex)
-                            new_node.level = current_node.level + 1
-                            #node_weight = new_node.total_weight() - parent_weight
-                            #new_node.tot_cost = gfunc(node_weight, launch)
-                            new_node.tot_cost = new_node.tot_cost + gFunc(n, vertex, launch)
-                            node_weight = new_node.total_weight()-parent_weight
-                            if not check_repeated(new_node, node_list):
-                                if not exceed_payload(node_weight, launch.max_payload):
-                                    node_list.append(new_node)
-                                    test = 1
 
-    # elimina casos em que o peso restante excede o dos lançamentos que faltam
-    if node_list:
-        # peso que é possível enviar nos launches restantes (nos child nodes)
-        index = node_list[0].level - 1
-        available_weight = available_weight - launch_list[index].max_payload
+    while len(launch_list)>level:
+        launch = launch_list[level]
+        level=level+1
+        node_list[0].level=level
+        n=0
+        test=1
+        while test:
+            test = 0
+            n = n + 1
+            for node in node_list:
+                if (node.num_vertex == (n-1)) and (node.level == level):
+                    for vertex in vertex_list:
+                        if not vertex.search_in_list(node.in_space):
+                            #if ((vertex.connected_to_list(node.in_space)) or (current_node.level==0)):
+                            if ((vertex.connected_to_list(node.in_space)) or (not node.in_space)):
+                                new_node = Node()
+                                new_node.copy_node(node)
+                                new_node.num_vertex = n
+                                new_node.parent = current_node
+                                new_node.in_space.append(vertex)
+                                new_node.added.append(vertex)
+                                new_node.level = level
+                                #node_weight = new_node.total_weight() - parent_weight
+                                #new_node.tot_cost = gfunc(node_weight, launch)
+                                new_node.tot_cost = new_node.tot_cost + gFunc(n, vertex, launch)
+                                node_weight = new_node.total_weight()-parent_weight
+                                if not check_repeated(new_node, node_list):
+                                    if not exceed_payload(node_weight, launch.max_payload):
+                                        node_list.append(new_node)
+                                        test = 1
 
-        # soma do peso que falta enviar nos child nodes
-        for node in node_list:
-            remaining_weight = 0
-            for vertex in vertex_list:
-                if vertex not in node.in_space:
-                    remaining_weight = remaining_weight + vertex.weight
+        # elimina casos em que o peso restante excede o dos lançamentos que faltam
+        if node_list:
+            # peso que é possível enviar nos launches restantes (nos child nodes)
+            index = node_list[0].level - 1
+            available_weight = available_weight - launch_list[index].max_payload
 
-            # heuristic value
-            if informed:
-                node.heuristic = min_vcost * remaining_weight
-            if not informed:
-                node.heuristic = 0
+            # soma do peso que falta enviar nos child nodes
+            for node in node_list:
+                if node.level == level:
+                    remaining_weight = 0
+                    for vertex in vertex_list:
+                        if vertex not in node.in_space:
+                            remaining_weight = remaining_weight + vertex.weight
 
-            if remaining_weight > available_weight:
-                node_list.remove(node)
+                    # heuristic value
+                    if informed:
+                        node.heuristic = min_vcost * remaining_weight
+                    if not informed:
+                        node.heuristic = 0
+
+                    if remaining_weight > available_weight:
+                        node_list.remove(node)
+
+    node_list.remove(node_list[0])
 
     return node_list
 
 
 def check_repeated(node, node_list):
     for nd in node_list:
-        if nd.num_vertex == node.num_vertex:
+        if ((nd.num_vertex == node.num_vertex) and (node.level == nd.level)):
             i = 0
             for vertex in node.in_space:
                 if vertex.search_in_list(nd.in_space):
@@ -142,6 +153,6 @@ def printSolution(node, launch_list):
             for id in id_list:
                 vertex_string = vertex_string + ' ' + id
             print(launch_list[level-1].date, vertex_string, node.tot_cost-node.parent.tot_cost)
-        level=level-1
+        level=node.parent.level
         node=node.parent
     print(mission_cost)
