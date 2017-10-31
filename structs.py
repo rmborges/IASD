@@ -94,3 +94,8 @@ class Node(object):
         for vertex in self.in_space:
             total_weight = total_weight + vertex.weight
         return total_weight
+
+    def __lt__(self, other):
+        if (self.tot_cost+self.heuristic)<=(other.tot_cost+other.heuristic):
+            return True
+        return False
