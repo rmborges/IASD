@@ -55,6 +55,9 @@ class Launch(object):
         self.fixed_cost = fixed_cost
         self.variable_cost = variable_cost
         self.level = level
+        self.min_vc = -1
+        self.min_fc = -1
+        self.rem_weight = -1
 
 
     def print_launch(self):

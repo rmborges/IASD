@@ -52,7 +52,32 @@ def read_data(file):
             launch_level = launch_level + 1
             l = l + 1
 
-    launch_list=sorted(aux_list, key=lambda launch: launch.date_ord)
+    launch_list = sorted(aux_list, key=lambda launch: launch.date_ord)
+
+    rem_weight_dict = dict()
+    vc_dict = dict()
+    for launch in launch_list:
+        rem_weight_dict[launch] = launch.max_payload
+        vc_dict[launch] = launch.variable_cost
+
+
+    for launch in launch_list:
+        i = 0
+        rem_weight = 0
+        min_vc = float('Inf')
+        min_fc = float('Inf')
+        while i < (len(launch_list) - launch_list.index(launch)):
+            index = launch_list.index(launch)
+            l = launch_list[index+i]
+            rem_weight = rem_weight + l.max_payload
+            if l.variable_cost < min_vc:
+                min_vc = l.variable_cost
+            if l.fixed_cost < min_fc:
+                min_fc = l.fixed_cost
+            i = i + 1
+        launch.rem_weight = rem_weight
+        launch.min_vc = min_vc
+        launch.min_fc = min_fc
 
     for edge in edge_list[:]:
         for vertex in vertex_list[:]:

@@ -25,8 +25,8 @@ class GeneralSearch:
 
         while True:
 
-            if not frontier:
-                print('Failure: frontier list vazia.')
+            if frontier.empty():
+                #print('Failure: frontier list vazia.')
                 return False
 
             # Retrieve the node with the lowest cost
