@@ -22,6 +22,8 @@ class Vertex(object):
         return 0
 
     def connected_to_list(self, vertex_list):
+        if not vertex_list:
+            return 1
         for vt in vertex_list:
             if self.search_in_list(vt.connect):
                 return 1
