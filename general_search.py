@@ -48,6 +48,7 @@ class GeneralSearch:
             for child in child_nodes:
                 if child not in (frontier or explored):
                     frontier.append(child)
+
                 elif child in frontier:
                     index = frontier.index(child)
                     if child.tot_cost < frontier[index].tot_cost:

@@ -24,6 +24,7 @@ def successorFunc(current_node, vertex_list, launch_list, gFunc, informed):
     node_list.append(empty_node)
 
     level = current_node.level
+
     #Ciclo para criar nodes
     while level < len(launch_list):
         launch = launch_list[level]
@@ -68,9 +69,11 @@ def successorFunc(current_node, vertex_list, launch_list, gFunc, informed):
                 node_list.remove(node)
                 # heuristic value
             else:
-                i=i+1
+                i = i + 1
                 if informed:
-                    node.heuristic = launch_list[node.level-1].min_vc * remaining_weight
+                    node.heuristic = launch_list[node.level - 1].min_vc * remaining_weight
+                    if remaining_weight > 0:
+                        node.heuristic = node.heuristic + launch_list[node.level - 1].min_fc
                 if not informed:
                     node.heuristic = 0
 
@@ -104,20 +107,20 @@ def goalCheck(node, vertex_list):
             return False
     return True
 
-def gFunc(n, vertex, launch): #ver launch level
+
+def gFunc(n, vertex, launch):
     cost = 0
     if n == 1:
         cost = launch.fixed_cost
     cost = cost + vertex.weight*launch.variable_cost
     return cost
 
-def printSolution(node, launch_list):
-    #sum_costs = 0
-    mission_cost=node.tot_cost
-    #cleanPreviousVertex(node)
-    level=node.level
 
-    while level>0:
+def printSolution(node, launch_list):
+    mission_cost = node.tot_cost
+    level = node.level
+
+    while level > 0:
         id_list = []
         for vertex in node.added:
             id_list.append(vertex.id)
@@ -129,4 +132,3 @@ def printSolution(node, launch_list):
         level=node.parent.level
         node=node.parent
     print(mission_cost)
-
