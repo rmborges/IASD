@@ -100,7 +100,26 @@ class Node(object):
             total_weight = total_weight + vertex.weight
         return total_weight
 
+    # to insert in list by cost
     def __lt__(self, other):
         if (self.tot_cost+self.heuristic)<=(other.tot_cost+other.heuristic):
+            return True
+        return False
+
+    def equal_list(self, list1, list2):
+        if (not list1) and (not list2):
+            return 1
+        if not (len(list1) == len(list2)):
+            return 0
+        for v in list1:
+            if not v.search_in_list(list2):
+                return 0
+        return 1
+
+    # equivalent nodes
+    def __eq__(self, other):
+        level1 = self.level
+        level2 = other.level
+        if self.equal_list(self.in_space, other.in_space) and (level1 == level2):
             return True
         return False

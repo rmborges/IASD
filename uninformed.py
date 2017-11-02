@@ -48,6 +48,7 @@ def successorFunc(current_node, vertex_list, launch_list, gFunc, informed):
                             new_node.tot_cost = new_node.tot_cost + gFunc(n, vertex, launch)
                             node_weight = new_node.total_weight()-parent_weight
                             if not check_repeated(new_node, node_list) and (not exceed_payload(node_weight, launch.max_payload)):
+                                new_node.in_space = sorted(new_node.in_space, key=lambda vertex: vertex.id)
                                 node_list.append(new_node)
                                 test = 1
 
@@ -128,3 +129,4 @@ def printSolution(node, launch_list):
         level=node.parent.level
         node=node.parent
     print(mission_cost)
+

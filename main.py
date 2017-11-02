@@ -28,7 +28,7 @@ lists = read_data(file)
 root_node = Node()
 
 # in/uninformed
-informed = 0
+informed = 1
 
 solve = GeneralSearch(root_node, strategyFunc, goalCheck, successorFunc, gFunc, vertex_list, launch_list, informed)
 

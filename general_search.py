@@ -17,27 +17,27 @@ class GeneralSearch:
         self.informed = informed
 
     def solver(self):
-        frontier = PriorityQueue()
-        frontier.put((self.root_node.tot_cost, self.root_node))
+        frontier = [self.root_node]
+        explored = []
         child_nodes = []
 
-        i=0
+        i=1
 
         while True:
 
-            if frontier.empty():
-                #print('Failure: frontier list vazia.')
+            if not frontier:
                 return False
 
             # Retrieve the node with the lowest cost
-            cost_and_node = frontier.get()
-            node = cost_and_node[1]
+            node = min(frontier, key=lambda node: (node.tot_cost+node.heuristic))
 
-            i=i+1
+            i = i + 1
 
-            #frontier.remove(node)
+            frontier.remove(node)
 
-            # objetivo atingido (GOAL)?
+            explored.append(node)
+
+            # goal state?
             if self.goalCheck(node, self.vertex_list):
                 print(i)
                 return node # retorna solução
@@ -46,11 +46,9 @@ class GeneralSearch:
             child_nodes = successorFunc(node, self.vertex_list, self.launch_list, self.gFunc, self.informed)
 
             for child in child_nodes:
-                #if child not in frontier:
-                value = child.tot_cost + child.heuristic
-                frontier.put((value, child))
-                #elif child in frontier:
-                #    print(AAAAAAAAAA)
-                #    index = frontier.index(child)
-                #    if child.tot_cost < frontier[index].tot_cost:
-                #        frontier[index] = child
+                if child not in (frontier or explored):
+                    frontier.append(child)
+                elif child in frontier:
+                    index = frontier.index(child)
+                    if child.tot_cost < frontier[index].tot_cost:
+                        frontier[index] = child
