@@ -80,6 +80,7 @@ def successorFunc(current_node, vertex_list, launch_list, gFunc, informed):
     return node_list
 
 
+# verifica se um node já foi aberto através de outro caminho
 def check_repeated(node, node_list):
     for nd in node_list:
         if ((nd.num_vertex == node.num_vertex) and (node.level == nd.level)):
