@@ -1,20 +1,18 @@
 from structs import *
-import copy
 
 # funções dependentes do problema
 
-
+# successor function
 def successorFunc(current_node, vertex_list, launch_list, gFunc, informed):
     node_list = []
 
+    # caso em que já não há mais lançamentos
     if current_node.level == len(launch_list):
         return node_list
 
-
-
     parent_weight = current_node.total_weight()
 
-    #Criar node vazio que serve de base aos restantes mas que no fim será removido
+    # criar node vazio que serve de base aos restantes mas que no fim será removido
     empty_node = Node()
     empty_node.parent = current_node
     empty_node.level = current_node.level
@@ -25,7 +23,7 @@ def successorFunc(current_node, vertex_list, launch_list, gFunc, informed):
 
     level = current_node.level
 
-    #Ciclo para criar nodes
+    # ciclo para criar nodes
     while level < len(launch_list):
         launch = launch_list[level]
         level=level+1
@@ -53,6 +51,7 @@ def successorFunc(current_node, vertex_list, launch_list, gFunc, informed):
                                 node_list.append(new_node)
                                 test = 1
 
+    # remoção do node que serve de base
     node_list.remove(node_list[0])
 
     # elimina casos em que o peso restante excede o dos lançamentos que faltam
@@ -67,7 +66,8 @@ def successorFunc(current_node, vertex_list, launch_list, gFunc, informed):
 
             if remaining_weight > (launch_list[node.level-1].rem_weight-launch_list[node.level-1].max_payload):
                 node_list.remove(node)
-                # heuristic value
+
+            # cálculo do valor da heurística
             else:
                 i = i + 1
                 if informed:
@@ -76,7 +76,6 @@ def successorFunc(current_node, vertex_list, launch_list, gFunc, informed):
                         node.heuristic = node.heuristic + launch_list[node.level - 1].min_fc
                 if not informed:
                     node.heuristic = 0
-
 
     return node_list
 
@@ -92,15 +91,19 @@ def check_repeated(node, node_list):
                 return 1
     return 0
 
+# verifica se excede max_payload
 def exceed_payload(node_weight, max_payload):
     if (node_weight > max_payload):
         return 1
     return 0
 
 
-def strategyFunc(open_list):
-    return min(open_list, key=lambda node: node.tot_cost)
+# strategy func
+def strategyFunc(frontier):
+    return min(frontier, key=lambda node: (node.tot_cost+node.heuristic))
 
+
+# verifica se node é solução
 def goalCheck(node, vertex_list):
     for vertex in vertex_list:
         if not vertex.search_in_list(node.in_space):
@@ -108,6 +111,7 @@ def goalCheck(node, vertex_list):
     return True
 
 
+# g function
 def gFunc(n, vertex, launch):
     cost = 0
     if n == 1:
@@ -116,10 +120,10 @@ def gFunc(n, vertex, launch):
     return cost
 
 
+# imprime a solução
 def printSolution(node, launch_list):
     mission_cost = node.tot_cost
     level = node.level
-
     while level > 0:
         id_list = []
         for vertex in node.added:

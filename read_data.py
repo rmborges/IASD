@@ -1,8 +1,9 @@
 from structs import *   #estruturas de dados
 
+# leitura do ficheiro com os dados
+
 def read_data(file):
 
-    # leitura do ficheiro com os dados
     iss_data = open(file, 'r')
 
     v = 0
@@ -36,7 +37,6 @@ def read_data(file):
             vertex2=Vertex(fields[2],0)
             edge_list.append(Edge(vertex1, vertex2))
             edge_list[e].add_weight(vertex_list)
-            #edge_list[e].print_edge()
             e = e + 1
 
         if line[0] == 'L':
@@ -45,22 +45,17 @@ def read_data(file):
             fixed_cost = float(fields[3])
             variable_cost = float(fields[4])
 
-            date_ord=date[4]+date[5]+date[6]+date[7]+date[2]+date[3]+date[0]+date[1]
+            date_ord = date[4]+date[5]+date[6]+date[7]+date[2]+date[3]+date[0]+date[1]
 
             aux_list.append(Launch(date, date_ord, max_payload, fixed_cost, variable_cost, launch_level))
-            #launch_list[l].print_launch()
+
             launch_level = launch_level + 1
             l = l + 1
 
     launch_list = sorted(aux_list, key=lambda launch: launch.date_ord)
 
-    rem_weight_dict = dict()
-    vc_dict = dict()
-    for launch in launch_list:
-        rem_weight_dict[launch] = launch.max_payload
-        vc_dict[launch] = launch.variable_cost
-
-
+    # para cada launch, calcula peso que ainda é possível enviar nos launches restantes (incluindo o próprio)
+    # calcula também o min var cost e o min fc dos launches restantes (excluindo o próprio)
     for launch in launch_list:
         i = 0
         rem_weight = 0
@@ -88,6 +83,3 @@ def read_data(file):
 
     lists = [vertex_list, launch_list]
     return lists
-
-    # order launch list by date
-    #launch_list.sort(key = lambda launch: launch.date[::-1])

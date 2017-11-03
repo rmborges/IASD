@@ -47,7 +47,6 @@ class Edge(object):
                 self.vertex2.weight = vertex.weight
 
 
-
 class Launch(object):
 
     def __init__(self, date,date_ord, max_payload, fixed_cost, variable_cost, level):
@@ -61,7 +60,6 @@ class Launch(object):
         self.min_fc = -1
         self.rem_weight = -1
 
-
     def print_launch(self):
         print('launch', self.date, self.max_payload, self.fixed_cost, self.variable_cost, self.level)
 
@@ -71,7 +69,7 @@ class Node(object):
     def __init__(self):
         self.parent = []
         self.in_space = []
-        self.added=[]
+        self.added = []
         self.tot_cost = 0
         self.num_vertex = 0
         self.level = 0
@@ -100,12 +98,6 @@ class Node(object):
             total_weight = total_weight + vertex.weight
         return total_weight
 
-    # to insert in list by cost
-    def __lt__(self, other):
-        if (self.tot_cost+self.heuristic)<=(other.tot_cost+other.heuristic):
-            return True
-        return False
-
     def equal_list(self, list1, list2):
         if (not list1) and (not list2):
             return 1
@@ -116,7 +108,8 @@ class Node(object):
                 return 0
         return 1
 
-    # equivalent nodes
+    # nodes equivalentes - overrides equivalence
+    # são equivalentes se o level é o mesmo e se estão os mesmos nodes no espaço
     def __eq__(self, other):
         level1 = self.level
         level2 = other.level

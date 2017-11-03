@@ -2,47 +2,36 @@ from general_search import *
 from uninformed import *
 from read_data import *
 from structs import *
-from time import *
 import sys
 
-# default option for data file
-file = 'iss.txt'
+# leitura das opções da linha de comandos
 
-# parse command line arguments
+if sys.argv[1] == '-i':
+    informed = 1  # informed search
 
-# uninformed or informed method
-#if sys.argv[1][1] == '-i':
-    #informed = 1
-#if sys.argv[1][1] == '-u':
-    #informed = 0
+if sys.argv[1] == '-u':
+    informed = 0  # uninformed search
 
-# file with data
-#file = sys.argv[2]
+# ficheiro com os dados do problema
+file = sys.argv[2]
 
-# read data from file
+# leitura dos dados do ficheiro
 lists = read_data(file)
 
+# listas de vértices e launches
 [vertex_list, launch_list] = lists
 
-# root node - empty node (nothing in space)
+# root node (nada no espaço)
 root_node = Node()
 
-# in/uninformed
-informed = 1
-
+# classe que constrói o problema
 solve = GeneralSearch(root_node, strategyFunc, goalCheck, successorFunc, gFunc, vertex_list, launch_list, informed)
 
-initial_time = time()
-
+# algoritmo de procura (general search)
 solution = solve.solver()
 
-total_time = time() - initial_time
-
+# impressão da solução
 if solution:
     printSolution(solution, launch_list)
 else:
-    print(0)
-
-print('\nElapsed time: ', total_time, 's')
-
-
+    print(0)  # se não existe solução

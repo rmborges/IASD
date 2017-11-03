@@ -1,6 +1,4 @@
 from uninformed import *
-from queue import PriorityQueue
-import copy
 
 # general search algorithm
 
@@ -17,21 +15,20 @@ class GeneralSearch:
         self.informed = informed
 
     def solver(self):
+        # frontier list
         frontier = [self.root_node]
-        explored = []
-        child_nodes = []
 
-        i=1
+        # explored nodes
+        explored = []
 
         while True:
 
             if not frontier:
+                print('Error: empty frontier list!')
                 return False
 
-            # Retrieve the node with the lowest cost
-            node = min(frontier, key=lambda node: (node.tot_cost+node.heuristic))
-
-            i = i + 1
+            # strategy function
+            node = strategyFunc(frontier)
 
             frontier.remove(node)
 
@@ -39,8 +36,7 @@ class GeneralSearch:
 
             # goal state?
             if self.goalCheck(node, self.vertex_list):
-                print(i)
-                return node # retorna solução
+                return node  # retorna solução
 
             # successor function
             child_nodes = successorFunc(node, self.vertex_list, self.launch_list, self.gFunc, self.informed)
