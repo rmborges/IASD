@@ -1,4 +1,4 @@
-from structs import *   #estruturas de dados
+from data_classes import *   #estruturas de dados
 
 # leitura do ficheiro com os dados
 
