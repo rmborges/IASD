@@ -69,13 +69,9 @@ def successorFunc(current_node, vertex_list, launch_list, gFunc, informed):
 
             # cálculo do valor da heurística
             else:
-                i = i + 1
-                if informed:
-                    node.heuristic = launch_list[node.level - 1].min_vc * remaining_weight
-                    if remaining_weight > 0:
-                        node.heuristic = node.heuristic + launch_list[node.level - 1].min_fc
-                if not informed:
-                    node.heuristic = 0
+                node.heuristic = 0
+                if informed and (remaining_weight>0):
+                    node.heuristic = launch_list[node.level].min_vc * remaining_weight + launch_list[node.level].min_fc
 
     return node_list
 
